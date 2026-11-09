@@ -13,15 +13,3 @@
 3. Run `npm run qs` this runs the createDb.js file with node, and starts the server.js with nodemon.
 4. Open the server in your browser on https://localhost:3002 or https://127.0.0.1:3002 
 
-## Prototype Features
-- Searching 
-- Admin Panel
-- Payment Panel
-- Queue Panel
-- Genre Filtering 
-- Album Filtering
-- Song list
-
-## Missing
-- Player
-- Admin panel implementation
