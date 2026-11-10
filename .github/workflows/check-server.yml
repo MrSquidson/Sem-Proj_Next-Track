@@ -1,0 +1,53 @@
+name: Check server
+
+on:
+  workflow_run:
+    workflows: ["Create database"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  check-server:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start server and verify it responds
+        run: |
+          node backend/server.js >server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
+
+          for attempt in $(seq 1 30); do
+            if curl --silent --show-error --output /dev/null --max-time 2 http://127.0.0.1:3002; then
+              echo "Server responded on port 3002."
+              exit 0
+            fi
+
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat server.log
+              exit 1
+            fi
+
+            sleep 1
+          done
+
+          cat server.log
+          echo "Server did not respond on port 3002 within 30 seconds."
+          exit 1
