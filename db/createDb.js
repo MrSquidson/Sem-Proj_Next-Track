@@ -5,14 +5,13 @@ const db = await connect();
 const timestamp = (await db.query('select now() as timestamp')).rows[0]['timestamp'];
 console.log(`Recreating database on ${timestamp}...`);
 
-const tables = [
+await db.query('drop table if exists artists');
+await db.query('drop table if exists albums');
+await db.query('drop table if exists genres');
+await db.query('drop table if exists playlists');
+await db.query('drop table if exists tracks');
+await db.query('drop table if exists playlist_track');
 
-]
-
-// drop all tables present in the list.
-await tables.forEach(async (db_table) => {
-    console.log(`Dropped table ${db_table}`);
-});
 
 // Insert tables in the remote database
 /*
@@ -23,6 +22,7 @@ await db.query(`
 `);
 console.log(`Inserted table actors`);
 */
+
 await db.query(`
     create table artists (
         artist_id           integer primary key,
@@ -36,7 +36,7 @@ await db.query(`
     create table albums (
         album_id            integer primary key,
         title               Text,
-        artist_id           Integer,
+        artist_id           integer,
         release_date        date,
         riaa_certificate    text
     )
@@ -44,8 +44,8 @@ await db.query(`
 
 await db.query(`
     create table genres (
-        genre_id            integer primary key,
         name                text,
+        genre_id            integer primary key,
         description         text
     )
 `);
@@ -58,17 +58,18 @@ await db.query(`
         name                text
     )
 `);
+
 await db.query(`
     create table tracks (
         track_id        integer primary key,
+        title           text,
         album_id        integer,
         media_type_id   integer,
         genre_id        integer,
         milliseconds    integer,
         bytes           bigint,
-        unit_price      numeric(10, 2),
-        title           text
-    )
+        unit_price      numeric(10, 2)
+    ) 
 `);
 
 await db.query(`
@@ -105,7 +106,7 @@ console.log(`Uploaded to table albums`);
 
 
 await upload(db, 'db/genres.csv', `
-copy genres (genre_id, name, description)
+copy genres (name, genre_id, description)
 from stdin
 with csv header encoding 'UTF-8'
 `);
@@ -121,7 +122,7 @@ console.log(`Uploaded to table playlists`);
 
 
 await upload(db, 'db/tracks.csv', `
-copy tracks (track_id, album_id, media_type_id, genre_id, milliseconds, bytes, unit_price, title)
+copy tracks (track_id, title, album_id, media_type_id, genre_id, milliseconds, bytes, unit_price)
 from stdin
 with csv header encoding 'UTF-8'
 `);
