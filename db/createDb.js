@@ -119,7 +119,7 @@ console.log(`Uploaded to table albums`);
 await upload(db, 'db/genres.csv', `
 copy genres (name, genre_id, description)
 from stdin
-with csv header encoding 'UTF-8'
+with csv encoding 'UTF-8'
 `);
 console.log(`Uploaded to table genres`);
 
