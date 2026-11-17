@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- 
+  EKSAMENSFORKLARING: 
+  <!DOCTYPE html> fortæller browseren, at det er et moderne HTML5-dokument.
+  'lang="da"' fortæller at sproget er dansk (godt for tilgængelighed).
+-->
+<html lang="da">
+<head>
+    <!-- Tekniske indstillinger: Gør at vi kan bruge æ, ø, å og gør siden mobilvenlig -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Track - Jukebox</title>
+    
+    <!-- Forbindelse til vores CSS-ark (styles.css), som bestemmer hvordan det ser ud -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ==========================================
+      TOPBAR (Oprettet af Ulas)
+      HVORFOR VALGT?: Vi har valgt at lave en topbar, fordi den 
+      giver brugeren et fast overblik og hurtig adgang til navigationen.
+    =========================================== -->
+    <header class="topbar">
+        
+        <!-- Logo og navn i venstre side -->
+        <div class="logo-container">
+            <!-- Billedet af logoet. Vi bruger 'border-radius: 50%' i CSS til at fjerne den hvide baggrund -->
+            <img src="image/nextlogo.jpg" alt="Next Track Logo" class="logo-img">
+            <span class="logo-text">Next Track</span>
+        </div>
+
+        <!-- Navigation (Menupunkter) i højre side -->
+        <nav class="navbar">
+            <a href="#" class="active">Home</a>
+            <a href="#queue">Queue</a>
+            <a href="#admin">Admin</a>
+        </nav>
+
+    </header>
+
+
+    <!-- ==========================================
+      HOVEDINDHOLD (Main Content)
+    =========================================== -->
+    <main class="main-content">
+        
+        <h1>Choose your favorite genres</h1>
+        <p>Click the button to select a genre for the vote:</p>
+
+        <!-- Container der samler alle genre-kortene -->
+        <div class="genre-container">
+            
+            <!-- GENRE 1: ROCK -->
+            <div class="genre-card">
+                <span>Rock</span>
+                <!-- 
+                  HVORFOR VALGT?: Vi bruger 'onclick'. Når brugeren klikker på knappen, 
+                  kalder vi en JavaScript-funktion ('toggleGenre') og sender 'this' (knappen selv) 
+                  og genrens navn ('Rock') med ind i koden.
+                -->
+                <button class="check-btn" onclick="toggleGenre(this, 'Rock')">✓</button>
+            </div>
+
+            <!-- GENRE 2: RAP -->
+            <div class="genre-card">
+                <span>Rap</span>
+                <button class="check-btn" onclick="toggleGenre(this, 'Rap')">✓</button>
+            </div>
+
+            <!-- GENRE 3: POP -->
+            <div class="genre-card">
+                <span>Pop</span>
+                <button class="check-btn" onclick="toggleGenre(this, 'Pop')">✓</button>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- 
+      EKSAMENSFORKLARING: 
+      Vi indlæser JavaScript-filen (scripts.js) i bunden. 
+      HVORFOR?: Så er vi sikre på, at hele HTML-siden er indlæst, 
+      før JavaScript-koden prøver at køre.
+    -->
+    <script src="scripts.js"></script>
+
+</body>
+</html>
