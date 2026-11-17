@@ -2,15 +2,16 @@ import { connect } from './connect.js';
 import upload from 'pg-upload';
 
 const db = await connect();
-const timestamp = (await db.query('select now() as timestamp')).rows[0]['timestamp'];
-console.log(`Recreating database on ${timestamp}...`);
+const startTimestamp = (await db.query('select now() as timestamp')).rows[0]['timestamp'];
+console.log(`Recreating database on ${startTimestamp}...`);
 
-await db.query('drop table if exists artists');
-await db.query('drop table if exists albums');
-await db.query('drop table if exists genres');
-await db.query('drop table if exists playlists');
-await db.query('drop table if exists tracks');
+await db.query('drop table if exists users');
 await db.query('drop table if exists playlist_track');
+await db.query('drop table if exists tracks');
+await db.query('drop table if exists playlists');
+await db.query('drop table if exists genres');
+await db.query('drop table if exists albums');
+await db.query('drop table if exists artists');
 
 
 // Insert tables in the remote database
@@ -38,7 +39,10 @@ await db.query(`
         title               Text,
         artist_id           integer,
         release_date        date,
-        riaa_certificate    text
+        riaa_certificate    text,
+        CONSTRAINT fk_artist
+        FOREIGN KEY (artist_id)
+        REFERENCES artists(artist_id)
     )
 `);
 
@@ -79,6 +83,13 @@ await db.query(`
     )
 `);
 
+await db.query(`
+    create table users (
+        username    text,
+        email       text,
+        user_id     integer
+    )    
+    `)
 
 // Upload data from CSV files into the tables on remote
 /*
@@ -108,7 +119,7 @@ console.log(`Uploaded to table albums`);
 await upload(db, 'db/genres.csv', `
 copy genres (name, genre_id, description)
 from stdin
-with csv header encoding 'UTF-8'
+with csv encoding 'UTF-8'
 `);
 console.log(`Uploaded to table genres`);
 
@@ -135,7 +146,13 @@ from stdin
 with csv header encoding 'UTF-8'
 `);
 console.log(`Uploaded to table playlist_track`);
-
+// Dan et nyt timestamp som vi kan bruge som slut tidspunkt
+const endTimestamp = (await db.query('select now() as timestamp')).rows[0]['timestamp'];
 
 await db.end();
-console.log('Database successfully recreated.');
+
+// Fjern start tidspunktet fra slut tidspunktet her får vi differencen, altså den tid der er gået
+let duration = new Date(endTimestamp) - new Date(startTimestamp);
+// Sluttidspunktet kan så logges og vi kan vise hvor meget tid der er brugt på det i sekunder
+console.log(`Database successfully recreated on ${endTimestamp}`);
+console.log(`Duration: ${duration/1000} s`);

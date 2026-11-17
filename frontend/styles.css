@@ -1,0 +1,155 @@
+/* ==========================================
+  1. GENERELT NULSTILLING (Reset)
+  HVORFOR?: Fjerner browserens standard-marginer, så det ser ens ud alle steder.
+=========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212; /* Mørk, moderne baggrund der passer til musik */
+    color: #ffffff;            /* Hvid tekst for god kontrast */
+}
+
+
+/* ==========================================
+  2. TOPBAR OG FLEXBOX
+  HVORFOR FLEXBOX?: Vi bruger 'display: flex' og 'justify-content: space-between', 
+  fordi det er den nemmeste og mest moderne måde at skubbe logoet helt ud til venstre 
+  og menuen ud til højre på.
+=========================================== */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #2a2a2a;
+    
+    /* Gør at topbaren klistrer til toppen, når man scroller */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+/* ==========================================
+  3. LOGO STYLING
+=========================================== */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Plads mellem logo og tekst */
+}
+
+.logo-img {
+    height: 65px;
+    width: auto;   
+    border-radius: 50%; /* Gør billedet helt rundt, så den hvide firkantede baggrund forsvinder */
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #00ffcc; /* Mintgrøn farve der fanger opmærksomheden */
+}
+
+
+/* ==========================================
+  4. NAVIGATION
+=========================================== */
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: #b3b3b3;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: #ffffff;
+    background-color: #ff007f; /* Pink farve for at vise hvor man er */
+}
+
+
+/* ==========================================
+  5. HOVEDINDHOLD OG GENRE KORT
+=========================================== */
+.main-content {
+    max-width: 800px;
+    margin: 40px auto; /* Centrerer indholdet på skærmen */
+    padding: 0 20px;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.main-content p {
+    color: #a0a0a0;
+    margin-bottom: 30px;
+}
+
+.genre-container {
+    display: flex;
+    flex-direction: column; /* Lægger boksene oven på hinanden */
+    gap: 15px;              /* Luft mellem boksene */
+}
+
+.genre-card {
+    display: flex;
+    justify-content: space-between; /* Tekst til venstre, knap til højre */
+    align-items: center;
+    background-color: #1e1e1e;     /* Mørk boksfarve */
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 1px solid #2e2e2e;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+/* ==========================================
+  6. KNAPPER OG AKTIV STATE (.checked)
+=========================================== */
+.check-btn {
+    background-color: #333333; /* Standard mørk knap */
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.check-btn:hover {
+    background-color: #444444;
+}
+
+/* 
+  HVORFOR DENNE KLASSE?: 
+  Når brugeren klikker, tilføjer JavaScript klassen '.checked'. 
+  CSS sørger så for, at knappen skifter til en flot klar grøn farve!
+*/
+.check-btn.checked {
+    background-color: #00C853; 
+    color: #ffffff;            
+}
