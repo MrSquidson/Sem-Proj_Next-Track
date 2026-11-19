@@ -87,9 +87,10 @@ await db.query(`
     create table users (
         username    text,
         email       text,
-        user_id     integer
+        user_id     integer primary key,
+        unique (email)
     )    
-    `)
+`);
 
 // Upload data from CSV files into the tables on remote
 /*
@@ -146,6 +147,13 @@ from stdin
 with csv header encoding 'UTF-8'
 `);
 console.log(`Uploaded to table playlist_track`);
+
+await upload(db, 'db/users.csv', `
+copy users (username, email, user_id)
+from stdin
+with csv header encoding 'UTF-8'
+`);
+console.log(`Uploaded to table users`);
 // Dan et nyt timestamp som vi kan bruge som slut tidspunkt
 const endTimestamp = (await db.query('select now() as timestamp')).rows[0]['timestamp'];
 
