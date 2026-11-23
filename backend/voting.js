@@ -11,15 +11,26 @@ let gemtData = {
   vinder: null
 };
 
-// Henter tidligere stemmer, hvis filen findes
+// Tjekker om JSON-filen med tidligere stemmer findes
 if (existsSync(fil)) {
+
+    // Læser indholdet af filen som tekst(utf8)
+    // JSON.parse omdanner teksten til et JavaScript-objekt
+    // Dvs. vi kan bruge de tidligere gemte stemmer
   gemtData = JSON.parse(readFileSync(fil, "utf8"));
 }
 
-// Opretter vores Map med eventuelle gemte stemmer
+// Opretter vores Map med de tidligere gemte stemmer
+// Map gemmer brugerID & playlistId som nøgle og værdi
+// En bruget kan derfor kun have én aktiv stemme
 const stemmer = new Map(gemtData.stemmer);
-
+ 
+// Henter info om afstemnningenns status
+// afsluttet fortæller om afstemningen er lukket 
 let afsluttet = gemtData.afsluttet;
+
+// Henter den gemte vinder
+// Hvis ingen vinder er fundet endnu, er værdien null
 let vinder = gemtData.vinder;
 
 // Funktion 1: Gem stemmer

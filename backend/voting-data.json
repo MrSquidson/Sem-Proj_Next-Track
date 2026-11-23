@@ -1,0 +1,22 @@
+{
+  "stemmer": [
+    [
+      1,
+      "Rock"
+    ],
+    [
+      2,
+      "Rap"
+    ],
+    [
+      3,
+      "Pop"
+    ],
+    [
+      4,
+      "Pop"
+    ]
+  ],
+  "afsluttet": true,
+  "vinder": "Pop"
+}
