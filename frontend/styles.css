@@ -65,6 +65,8 @@ body {
 .navbar {
     display: flex;
     gap: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar a {
@@ -168,4 +170,23 @@ body {
     border: 1px solid #2e2e2e;
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+.profile-img {
+    height: 35px;
+    width: auto;   
+    border-radius: 50%; /* Gør billedet helt rundt, så den hvide firkantede baggrund forsvinder */
+    object-fit: cover;
+    display: inline-flex; 
+    vertical-align: center;
+}
+
+.profile-text {
+    display: inline-block; 
+    vertical-align: center;
+}
+
+.profile-container {
+    float: right; 
+    display: flex;
 }

@@ -45,3 +45,17 @@ function toggleGenre(button, genreName) {
     // så vi hele tiden kan bevise over for lærerne, at dataen bliver gemt korrekt!
     console.log("Aktuelle valgte genrer i array:", userSelectedGenres);
 }
+
+/*
+    Find query param user='FooBar'
+
+    From the following codepen; https://codepen.io/mariocatch/pen/OMQGap?role=manager
+    Related to this Stackoverflow post; https://stackoverflow.com/questions/34985249/have-the-same-page-of-a-website-display-different-things-based-on-a-passed-varia
+
+    var role = getQueryParameter('role')
+    if(role.toLowerCase() === 'manager') {
+      $('#manager-view').show();
+    } else if(role.toLowerCase() === 'employee') {
+      $('#employee-view').show();
+    }
+*/
