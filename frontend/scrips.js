@@ -1,47 +1,160 @@
 // ==========================================
-// 1. ARRAY (Datastruktur)
-// HVAD ER DET?: Et array er en liste, der kan gemme flere værdier i én variabel.
-// HVORFOR VALGT?: Vi bruger et array ('userSelectedGenres') til at huske, 
-// hvilke genrer brugeren har stemt på, så vi kan sende dem videre til databasen eller backenden senere.
+// 1. ARRAYS (Lister med sange/albums)
 // ==========================================
 let userSelectedGenres = [];
 
+let rockSongs = [
+    "AC/DC - For Those About To Rock We Salute You",
+    "Nirvana - Nevermind",
+    "Queen - Greatest Hits I",
+    "Metallica - Black Album",
+    "Green Day - American Idiot",
+    "Guns N' Roses - Appetite for Destruction",
+    "Led Zeppelin - IV",
+    "Red Hot Chili Peppers - Californication"
+];
+
+let rapSongs = [
+    "House of Pain - House of Pain",
+    "Body Count - Body Count",
+    "Eminem - Lose Yourself (Eksempel)",
+    "Drake - God's Plan (Eksempel)"
+];
+
+let popSongs = [
+    "Amy Winehouse - Back to Black",
+    "Amy Winehouse - Frank",
+    "U2 - Pop",
+    "Alanis Morissette - Jagged Little Pill",
+    "Marvin Gaye - Seek And Shall Find",
+    "Jamiroquai - Emergency On Planet Earth",
+    "Santana - Supernatural",
+    "The Police - Greatest Hits"
+];
+
+let customSongs = [];
+
 
 // ==========================================
-// 2. FUNKTION (Genbrugelig koderblok)
-// HVAD ER DET?: En funktion er en samling kode, der først kører, når den bliver aktiveret 
-// (i dette tilfælde når brugeren klikker på en knap).
+// 2. VIS SANGENE MED DET SAMME NÅR SIDEN ÅBNER
+// ==========================================
+window.onload = function() {
+    showSongsOnScreen("rockListDisplay", rockSongs);
+    showSongsOnScreen("rapListDisplay", rapSongs);
+    showSongsOnScreen("popListDisplay", popSongs);
+    showSongsOnScreen("customListDisplay", customSongs);
+};
+
+
+// ==========================================
+// 3. GENRE-AFSTEMNING
 // ==========================================
 function toggleGenre(button, genreName) {
-
-    // ==========================================
-    // 3. DOM MANIPULATION & KLASSER
-    // Vi bruger '.toggle()'. Den tjekker: Hvis knappen IKKE har klassen 'checked', 
-    // så sæt den på. Hvis den HAR den, så fjern den. Det skifter farven på knappen.
-    // ==========================================
     let isChecked = button.classList.toggle('checked');
 
-    // ==========================================
-    // 4. BETINGELSE (if / else)
-    // Vi tjekker om knappen er markeret eller ej, og gør to forskellige ting.
-    // ==========================================
     if (isChecked) {
-        // HVIS VALGT: Vi bruger metoden '.push()' til at tilføje genren til vores array.
         userSelectedGenres.push(genreName);
-        console.log("Tilføjet til array:", genreName);
-
     } else {
-        // HVIS FRAVALGT: Vi finder genrens plads (index) i arrayet...
         let index = userSelectedGenres.indexOf(genreName);
-        
-        // ...og hvis den findes (index er større end -1), fjerner vi den igen med '.splice()'.
         if (index > -1) {
             userSelectedGenres.splice(index, 1);
         }
-        console.log("Fjernet fra array:", genreName);
+    }
+}
+
+
+// ==========================================
+// 4. TILFØJ SELV SANGE
+// ==========================================
+function addSong() {
+    let songInput = document.getElementById('songInput');
+    let listSelect = document.getElementById('listSelect');
+
+    let songTitle = songInput.value;
+    let chosenList = listSelect.value;
+
+    if (songTitle === "") {
+        alert("Hov! Du skal skrive navnet på en sang først.");
+        return;
     }
 
-    // Vi udskriver hele arrayet i konsollen (Tryk F12 i browseren -> Console), 
-    // så vi hele tiden kan bevise over for lærerne, at dataen bliver gemt korrekt!
-    console.log("Aktuelle valgte genrer i array:", userSelectedGenres);
+    if (chosenList === "rock") {
+        rockSongs.push(songTitle);
+        showSongsOnScreen("rockListDisplay", rockSongs);
+    } 
+    else if (chosenList === "rap") {
+        rapSongs.push(songTitle);
+        showSongsOnScreen("rapListDisplay", rapSongs);
+    } 
+    else if (chosenList === "pop") {
+        popSongs.push(songTitle);
+        showSongsOnScreen("popListDisplay", popSongs);
+    } 
+    else if (chosenList === "custom") {
+        customSongs.push(songTitle);
+        showSongsOnScreen("customListDisplay", customSongs);
+    }
+
+    songInput.value = "";
+}
+
+
+// ==========================================
+// 5. HJÆLPEFUNKTION: TEGN LISTERNE PÅ SKÆRMEN
+// ==========================================
+function showSongsOnScreen(htmlElementId, songArray) {
+    let listElement = document.getElementById(htmlElementId);
+    listElement.innerHTML = "";
+
+    for (let i = 0; i < songArray.length; i++) {
+        listElement.innerHTML += "<li>" + songArray[i] + "</li>";
+    }
+}
+
+
+// ==========================================
+// 6. SØGEMASKINE
+// ==========================================
+function searchSongs() {
+    let searchText = document.getElementById('searchInput').value.toLowerCase();
+    let resultsList = document.getElementById('searchResultsDisplay');
+    resultsList.innerHTML = "";
+
+    if (searchText === "") {
+        return;
+    }
+
+    let foundSongs = [];
+
+    for (let i = 0; i < rockSongs.length; i++) {
+        if (rockSongs[i].toLowerCase().includes(searchText)) {
+            foundSongs.push(rockSongs[i] + " (Rock)");
+        }
+    }
+
+    for (let i = 0; i < rapSongs.length; i++) {
+        if (rapSongs[i].toLowerCase().includes(searchText)) {
+            foundSongs.push(rapSongs[i] + " (Rap)");
+        }
+    }
+
+    for (let i = 0; i < popSongs.length; i++) {
+        if (popSongs[i].toLowerCase().includes(searchText)) {
+            foundSongs.push(popSongs[i] + " (Pop)");
+        }
+    }
+
+    for (let i = 0; i < customSongs.length; i++) {
+        if (customSongs[i].toLowerCase().includes(searchText)) {
+            foundSongs.push(customSongs[i] + " (Egen Liste)");
+        }
+    }
+
+    if (foundSongs.length === 0) {
+        resultsList.innerHTML = "<li>Ingen sange fundet...</li>";
+    } else {
+        for (let i = 0; i < foundSongs.length; i++) {
+            resultsList.innerHTML += "<li>" + foundSongs[i] + "</li>";
+        }
+    }
 }

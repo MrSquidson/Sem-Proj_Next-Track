@@ -1,5 +1,5 @@
 /* ==========================================
-  1. GENERELT NULSTILLING (Reset)
+1. GENERELT NULSTILLING (Reset)
   HVORFOR?: Fjerner browserens standard-marginer, så det ser ens ud alle steder.
 =========================================== */
 * {
@@ -16,7 +16,7 @@ body {
 
 
 /* ==========================================
-  2. TOPBAR OG FLEXBOX
+2. TOPBAR OG FLEXBOX
   HVORFOR FLEXBOX?: Vi bruger 'display: flex' og 'justify-content: space-between', 
   fordi det er den nemmeste og mest moderne måde at skubbe logoet helt ud til venstre 
   og menuen ud til højre på.
@@ -37,7 +37,7 @@ body {
 
 
 /* ==========================================
-  3. LOGO STYLING
+3. LOGO STYLING
 =========================================== */
 .logo-container {
     display: flex;
@@ -60,7 +60,7 @@ body {
 
 
 /* ==========================================
-  4. NAVIGATION
+4. NAVIGATION
 =========================================== */
 .navbar {
     display: flex;
@@ -83,7 +83,7 @@ body {
 
 
 /* ==========================================
-  5. HOVEDINDHOLD OG GENRE KORT
+5. HOVEDINDHOLD OG GENRE KORT
 =========================================== */
 .main-content {
     max-width: 800px;
@@ -122,7 +122,7 @@ body {
 
 
 /* ==========================================
-  6. KNAPPER OG AKTIV STATE (.checked)
+6. KNAPPER OG AKTIV STATE (.checked)
 =========================================== */
 .check-btn {
     background-color: #333333; /* Standard mørk knap */
@@ -152,4 +152,121 @@ body {
 .check-btn.checked {
     background-color: #00C853; 
     color: #ffffff;            
+}
+
+
+/* ==========================================
+7. SØGEMASKINE STYLING
+=========================================== */
+.divider {
+    border: 0;
+    border-top: 1px solid #2e2e2e;
+    margin: 40px 0;
+}
+
+.main-content h2 {
+    margin-bottom: 20px;
+    color: #00ffcc;
+}
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #00ffcc; /* Mintgrøn kant så søgefeltet skiller sig ud */
+    background-color: #1e1e1e;
+    color: white;
+    font-size: 1rem;
+}
+
+.search-results {
+    list-style: none; /* Fjerner standard prikker */
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.search-results li {
+    background-color: #262626;
+    padding: 10px 15px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    border-left: 4px solid #ff007f; /* Pink streg i venstre side */
+}
+
+
+/* ==========================================
+8. TILFØJ SANG & DE 4 MUSIKLISTER
+=========================================== */
+.add-song-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Gør at det hopper ned på næste linje på mobil */
+}
+
+.add-song-box input, .add-song-box select {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+    color: white;
+    font-size: 1rem;
+}
+
+.add-song-box input {
+    flex: 1; /* Gør tekstfeltet bredt */
+    min-width: 200px;
+}
+
+.add-btn {
+    padding: 12px 20px;
+    background-color: #ff007f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+    background-color: #d6006b;
+}
+
+/* Gitter (Grid) der stiller de 4 musiklister pænt op i 2x2 bokse */
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolonner */
+    gap: 20px;
+    text-align: left;
+}
+
+.playlist-box {
+    background-color: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 150px;
+}
+
+.playlist-box h3 {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+}
+
+.playlist-box ul {
+    list-style-position: inside; /* Sætter prikkerne pænt inden for boksen */
+    color: #d0d0d0;
+}
+
+.playlist-box li {
+    padding: 5px 0;
+    border-bottom: 1px solid #262626;
 }
