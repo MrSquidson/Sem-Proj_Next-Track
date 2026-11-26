@@ -3,34 +3,28 @@
 // ==========================================
 let userSelectedGenres = [];
 
-let rockSongs = [
-    "AC/DC - For Those About To Rock We Salute You",
-    "Nirvana - Nevermind",
-    "Queen - Greatest Hits I",
-    "Metallica - Black Album",
-    "Green Day - American Idiot",
-    "Guns N' Roses - Appetite for Destruction",
-    "Led Zeppelin - IV",
-    "Red Hot Chili Peppers - Californication"
-];
+const rockSongs = [];
+const popSongs = [];
+const rapSongs = [];
 
-let rapSongs = [
-    "House of Pain - House of Pain",
-    "Body Count - Body Count",
-    "Eminem - Lose Yourself (Eksempel)",
-    "Drake - God's Plan (Eksempel)"
-];
+async function loadPlaylists() {
+    const rockSongsResponse = await fetch('/api/genre/Rock/playlist/10').rows;
+    const rapSongsResponse = await fetch('/api/genre/Rap/playlist/10').rows;
+    const popSongsResponse = await fetch('/api/genre/Pop/playlist/10').rows;
 
-let popSongs = [
-    "Amy Winehouse - Back to Black",
-    "Amy Winehouse - Frank",
-    "U2 - Pop",
-    "Alanis Morissette - Jagged Little Pill",
-    "Marvin Gaye - Seek And Shall Find",
-    "Jamiroquai - Emergency On Planet Earth",
-    "Santana - Supernatural",
-    "The Police - Greatest Hits"
-];
+    if (!rockSongsResponse.ok || !rapSongsResponse.ok || !popSongsResponse.ok){
+        throw new Error(`One or more API requests failed! with status(s) Rock: ${rockSongsResponse.status}, Rap: ${rapSongsResponse.status}, Pop: ${popSongsResponse.status}`)
+    }
+
+    const rockSongsJson = rockSongsResponse.json();
+    const rapSongsJson = rapSongsResponse.json();
+    const popSongsJson = popSongsResponse.json();
+
+    rockSongsJson.array.forEach(Element => {
+        let songString = `${Element.title} - ${Element.stage_name}`;
+        rockSongs.push(songString);
+    });
+}
 
 let customSongs = [];
 
@@ -38,7 +32,9 @@ let customSongs = [];
 // ==========================================
 // 2. VIS SANGENE MED DET SAMME NÅR SIDEN ÅBNER
 // ==========================================
-window.onload = function() {
+window.onload = async function() {
+    await loadPlaylists();
+    console.log(rockSongs)
     showSongsOnScreen("rockListDisplay", rockSongs);
     showSongsOnScreen("rapListDisplay", rapSongs);
     showSongsOnScreen("popListDisplay", popSongs);
@@ -107,7 +103,7 @@ function showSongsOnScreen(htmlElementId, songArray) {
     listElement.innerHTML = "";
 
     for (let i = 0; i < songArray.length; i++) {
-        listElement.innerHTML += "<li>" + songArray[i] + "</li>";
+        listElement.innerHTML += "<li>" + songArray[i].title + songArray[i].stage_name + "</li>";
     }
 }
 

@@ -12,6 +12,23 @@ server.use(express.static('frontend'));
 server.use(express.json());
 server.use(onEachRequest);
 // server.get('/api/artists', onGetArtists);
+server.get('/api/genre/:genre/playlist/:amount', onGetPlaylistByGenre);
+
+async function onGetPlaylistByGenre(request, response) {
+    const genre = request.params.genre;
+    const amount = request.params.amount;
+    const songs = await db.query(`
+        SELECT t.title, art.stage_name
+        FROM tracks t
+        JOIN albums alb on t.album_id = alb.album_id
+        JOIN artists art on alb.artist_id = art.artist_id
+        JOIN genres g on t.genre_id = g.genre_id
+        WHERE g.name = '${genre}'
+        LIMIT ${amount}
+        `);
+        response.json(songs)
+}
+
 
 // Logger når serveren er startet
 function onServerReady() {
