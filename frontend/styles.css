@@ -270,3 +270,12 @@ body {
     padding: 5px 0;
     border-bottom: 1px solid #262626;
 }
+
+.current-song-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    text-align: center;
+}
