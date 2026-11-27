@@ -2,7 +2,7 @@
 let playedSongs = [];
 
 // Funktion til at vælge næste sang
-function nextTrack(playlist, playedSongs) {
+export function nextTrack(playlist, playedSongs) {
 
     // Filtrerer allerede valgte sange fra
     const filteredSongs = playlist.filter(song =>

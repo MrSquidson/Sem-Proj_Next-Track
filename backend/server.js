@@ -13,6 +13,7 @@ server.use(express.json());
 server.use(onEachRequest);
 // server.get('/api/artists', onGetArtists);
 server.get('/api/genre/:genre/playlist/:amount', onGetPlaylistByGenre);
+server.get('/api/songs', onGetAllSongs);
 
 async function onGetPlaylistByGenre(request, response) {
     // genre får let variable da vi gerne vil rette den hvis genren indeholder en / 
@@ -35,6 +36,15 @@ async function onGetPlaylistByGenre(request, response) {
         response.json(songs)
 }
 
+async function onGetAllSongs(request, response) {
+    const songs = await db.query(`
+        SELECT t.title, art.stage_name
+        FROM tracks t
+        JOIN albums alb on t.album_id = alb.album_id
+        JOIN artists art on alb.artist_id = art.artist_id
+        `);
+    response.json(songs);
+}
 
 // Logger når serveren er startet
 function onServerReady() {

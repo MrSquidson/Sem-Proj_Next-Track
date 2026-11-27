@@ -74,11 +74,7 @@ let customSongs = [];
 // ==========================================
 window.onload = async function() {
     await loadPlaylists();
-    console.log(rockSongs)
-    showSongsOnScreen("rockListDisplay", rockSongs);
-    showSongsOnScreen("rapListDisplay", rapSongs);
-    showSongsOnScreen("popListDisplay", popSongs);
-    showSongsOnScreen("customListDisplay", customSongs);
+    await updateCurrentSongDisplay();
 };
 
 
@@ -196,3 +192,16 @@ function searchSongs() {
     }
 }
 
+// ==========================================
+// 7. currently playing display
+// ==========================================
+
+async function updateCurrentSongDisplay() {
+    const song= ["sang1"];
+    const currentSongTitle = document.getElementById("currentSongTitle");
+    if (song) {
+        currentSongTitle.textContent = `${song}`;
+    } else {
+        currentSongTitle.textContent = "Ingen sang afspilles";
+    }
+}
