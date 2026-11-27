@@ -48,4 +48,4 @@ function onEachRequest(request, response, next) {
 }
 
 // Starter Express-serveren
-server.listen(port, onServerReady);
+server.listen(port, onS erverReady);
