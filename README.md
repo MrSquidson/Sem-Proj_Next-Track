@@ -1,4 +1,8 @@
-# Mini Proj Jukebox
+# NextTrack
+*NextTrack is an imaginary project that through a stroke of luck sits on 93% of the market of 16-23yr/o's that listen to music. 
+The project as it's name implies- picks "the next track" for a queue of music*
+
+
 ## Installation / Setup
 
 1. Make a `.env` file that contains the following secrets to your remote NeonDB SQL server;
