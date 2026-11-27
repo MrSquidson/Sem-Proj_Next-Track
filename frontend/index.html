@@ -17,7 +17,7 @@
 <body>
 
     <!-- ==========================================
-      TOPBAR (Oprettet af Ulas)
+      TOPBAR (Oprettet af Ulas og Bashar)
       HVORFOR VALGT?: Vi har valgt at lave en topbar, fordi den 
       giver brugeren et fast overblik og hurtig adgang til navigationen.
     =========================================== -->
@@ -76,16 +76,79 @@
 
         </div>
 
+        <hr class="divider">
+
+        <!-- ==========================================
+          SØGEMASKINE
+          HVORFOR VALGT?: Vi bruger 'onkeyup' på input-feltet. 
+          Det betyder, at funktionen 'searchSongs()' kører automatisk, 
+          hver gang brugeren slipper en tast på tastaturet (live-søgning).
+        =========================================== -->
+        <h2>Søg efter musik</h2>
+        <div class="search-box">
+            <input type="text" id="searchInput" onkeyup="searchSongs()" placeholder="Søg efter kunstner eller sang...">
+        </div>
+
+        <!-- Her viser JavaScript resultaterne af søgningen -->
+        <ul id="searchResultsDisplay" class="search-results"></ul>
+
+        <hr class="divider">
+
+        <!-- ==========================================
+          TILFØJ SELV SANGE
+          HVORFOR VALGT?: Giver brugeren mulighed for at skrive 
+          en sangtitel og vælge hvilken af de 4 lister den skal i.
+        =========================================== -->
+        <h2>Tilføj musik til listerne</h2>
+        <div class="add-song-box">
+            <!-- Input-felt hvor brugeren skriver sangens navn -->
+            <input type="text" id="songInput" placeholder="Skriv kunstner og sangtitel...">
+            
+            <!-- Dropdown-menu så brugeren kan vælge mellem de 4 lister -->
+            <select id="listSelect">
+                <option value="rock">🎸 Rock</option>
+                <option value="rap">🎤 Rap</option>
+                <option value="pop">🎧 Pop</option>
+                <option value="custom">⭐ Egen Liste</option>
+            </select>
+
+            <!-- Knap der aktiverer funktionen 'addSong()' i JavaScript -->
+            <button class="add-btn" onclick="addSong()">Tilføj sang</button>
+        </div>
+
+        <!-- ==========================================
+          DE 4 MUSIKLISTER (Visning på skærmen)
+          HVORFOR 'ul' og 'id'?: En <ul> er en punktliste i HTML. 
+          Vi giver hver liste et unikt 'id', så JavaScript ved præcis, 
+          hvilken boks sangen skal vises i.
+        =========================================== -->
+        <div class="playlists-grid">
+            
+            <div class="playlist-box">
+                <h3>🎸 Rock</h3>
+                <ul id="rockListDisplay"></ul>
+            </div>
+
+         <div class="playlist-box">
+                <h3>🎤 Rap</h3>
+                <ul id="rapListDisplay"></ul>
+            </div>
+
+            <div class="playlist-box">
+                <h3>🎧 Pop</h3>
+                <ul id="popListDisplay"></ul>
+            </div>
+
+            <div class="playlist-box">
+                <h3>⭐ Egen Liste</h3>
+                <ul id="customListDisplay"></ul>
+            </div>
+
+        </div>
+
     </main>
 
-
-    <!-- 
-      EKSAMENSFORKLARING: 
-      Vi indlæser JavaScript-filen (scripts.js) i bunden. 
-      HVORFOR?: Så er vi sikre på, at hele HTML-siden er indlæst, 
-      før JavaScript-koden prøver at køre.
-    -->
-    <script src="scripts.js"></script>
+    <script src="./scripts.js"></script>
 
 </body>
 </html>
