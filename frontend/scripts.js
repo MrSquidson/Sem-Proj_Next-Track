@@ -8,23 +8,63 @@ const popSongs = [];
 const rapSongs = [];
 
 async function loadPlaylists() {
-    const rockSongsResponse = await fetch('/api/genre/Rock/playlist/10').rows;
-    const rapSongsResponse = await fetch('/api/genre/Rap/playlist/10').rows;
-    const popSongsResponse = await fetch('/api/genre/Pop/playlist/10').rows;
+    const rockSongsResponse = await fetch('/api/genre/Rock/playlist/10');
+    const rapSongsResponse = await fetch('/api/genre/Rap/playlist/10');
+    const popSongsResponse = await fetch('/api/genre/Pop/playlist/10');
 
     if (!rockSongsResponse.ok || !rapSongsResponse.ok || !popSongsResponse.ok){
         throw new Error(`One or more API requests failed! with status(s) Rock: ${rockSongsResponse.status}, Rap: ${rapSongsResponse.status}, Pop: ${popSongsResponse.status}`)
     }
 
-    const rockSongsJson = rockSongsResponse.json();
-    const rapSongsJson = rapSongsResponse.json();
-    const popSongsJson = popSongsResponse.json();
+    const rockSongsJson = await rockSongsResponse.json();
+    const rapSongsJson = await rapSongsResponse.json();
+    const popSongsJson = await popSongsResponse.json();
 
-    rockSongsJson.array.forEach(Element => {
+    rockSongsJson.rows.forEach(Element => {
         let songString = `${Element.title} - ${Element.stage_name}`;
         rockSongs.push(songString);
     });
+
+    rapSongsJson.rows.forEach(Element => {
+        let songString = `${Element.title} - ${Element.stage_name}`;
+        rapSongs.push(songString);
+    });
+
+    popSongsJson.rows.forEach(Element => {
+        let songString = `${Element.title} - ${Element.stage_name}`;
+        popSongs.push(songString);
+    });
+
+    const rapplay123 = document.getElementById('rapListDisplay');
+
+    rapSongs.forEach(Element => {
+        let li = document.createElement('li');
+        li.textContent = Element;
+        rapplay123.appendChild(li);
+        console.log(Element);
+    });
+
+    const rockplay123 = document.getElementById('rockListDisplay');
+
+    rockSongs.forEach(Element => {
+        let li = document.createElement('li');
+        li.textContent = Element;
+        rockplay123.appendChild(li);
+        console.log(Element);
+    });
+
+    const popplay123 = document.getElementById('popListDisplay');
+
+    popSongs.forEach(Element => {
+        let li = document.createElement('li');
+        li.textContent = Element;
+        popplay123.appendChild(li);
+        console.log(Element);
+    });
+
+    
 }
+
 
 let customSongs = [];
 
@@ -98,6 +138,7 @@ function addSong() {
 // ==========================================
 // 5. HJÆLPEFUNKTION: TEGN LISTERNE PÅ SKÆRMEN
 // ==========================================
+/*
 function showSongsOnScreen(htmlElementId, songArray) {
     let listElement = document.getElementById(htmlElementId);
     listElement.innerHTML = "";
@@ -106,7 +147,7 @@ function showSongsOnScreen(htmlElementId, songArray) {
         listElement.innerHTML += "<li>" + songArray[i].title + songArray[i].stage_name + "</li>";
     }
 }
-
+*/
 
 // ==========================================
 // 6. SØGEMASKINE
@@ -154,3 +195,4 @@ function searchSongs() {
         }
     }
 }
+
